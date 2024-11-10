@@ -121,6 +121,7 @@ When 0, no border is showed."
 
 ;; Local Variables:
 ;; coding: utf-8-unix
+;; indent-tabs-mode: t
 ;; End:
 
 ;;; transient-posframe.el ends here
