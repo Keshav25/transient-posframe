@@ -52,7 +52,7 @@ When nil, Using current frame's font as fallback."
   :group 'transient-posframe
   :type '(choice number (const :tag "No minimum" nil)))
 
-(defcustom transient-posframe-min-height 30
+(defcustom transient-posframe-min-height nil
   "The minimal height of transient-posframe."
   :group 'transient-posframe
   :type '(choice number (const :tag "No minimum" nil)))
