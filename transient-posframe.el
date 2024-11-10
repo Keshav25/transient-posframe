@@ -48,14 +48,14 @@ When nil, Using current frame's font as fallback."
   :type 'function)
 
 (defcustom transient-posframe-min-width 80
-  "The width of transient-min-posframe."
+  "The minimal width of transient-posframe."
   :group 'transient-posframe
-  :type 'number)
+  :type '(choice number (const :tag "No minimum" nil)))
 
 (defcustom transient-posframe-min-height 30
-  "The height of transient-min-posframe."
+  "The minimal height of transient-posframe."
   :group 'transient-posframe
-  :type 'number)
+  :type '(choice number (const :tag "No minimum" nil)))
 
 (defcustom transient-posframe-border-width 1
   "The border width used by transient-posframe.
