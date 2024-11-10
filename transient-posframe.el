@@ -109,13 +109,19 @@ When 0, no border is showed."
   :group 'transient-posframe
   :global t
   :lighter nil
-  (if transient-posframe-mode
-      (progn
-	(setq transient-posframe-display-buffer-action--previous transient-display-buffer-action
-	      transient-display-buffer-action '(transient-posframe--show-buffer))
-	(advice-add 'transient--delete-window :override #'transient-posframe--delete))
-    (setq transient-display-buffer-action transient-posframe-display-buffer-action--previous)
-    (advice-remove 'transient--delete-window #'transient-posframe--delete)))
+  (cond
+   (transient-posframe-mode
+    (setq transient-posframe-display-buffer-action--previous
+	  transient-display-buffer-action)
+    (setq transient-display-buffer-action
+	  '(transient-posframe--show-buffer))
+    (advice-add 'transient--delete-window :override
+		#'transient-posframe--delete))
+   (t
+    (setq transient-display-buffer-action
+	  transient-posframe-display-buffer-action--previous)
+    (advice-remove 'transient--delete-window
+		   #'transient-posframe--delete))))
 
 (provide 'transient-posframe)
 
