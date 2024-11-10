@@ -47,7 +47,7 @@ When nil, Using current frame's font as fallback."
   :group 'transient-posframe
   :type 'function)
 
-(defcustom transient-posframe-min-width 80
+(defcustom transient-posframe-min-width 83
   "The minimal width of transient-posframe."
   :group 'transient-posframe
   :type '(choice number (const :tag "No minimum" nil)))
