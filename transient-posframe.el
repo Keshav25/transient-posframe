@@ -91,12 +91,24 @@ When 0, no border is showed."
 			   :poshandler transient-posframe-poshandler
 			   :background-color (face-attribute 'transient-posframe :background nil t)
 			   :foreground-color (face-attribute 'transient-posframe :foreground nil t)
+			   :initialize #'transient-posframe--initialize
 			   :min-width transient-posframe-min-width
 			   :min-height transient-posframe-min-height
 			   :internal-border-width transient-posframe-border-width
 			   :internal-border-color (face-attribute 'transient-posframe-border :background nil t)
 			   :override-parameters transient-posframe-parameters)))
       (frame-selected-window posframe))))
+
+(defun transient-posframe--initialize ()
+  "Initialize transient posframe."
+  (setq window-resize-pixelwise t)
+  (setq window-size-fixed nil))
+
+(defun transient-posframe--resize (window)
+  "Resize transient posframe."
+  (fit-frame-to-buffer-1 (window-frame window)
+                         nil transient-posframe-min-height
+                         nil transient-posframe-min-width))
 
 (defun transient-posframe--delete ()
   "Delete transient posframe."
@@ -116,12 +128,16 @@ When 0, no border is showed."
     (setq transient-display-buffer-action
 	  '(transient-posframe--show-buffer))
     (advice-add 'transient--delete-window :override
-		#'transient-posframe--delete))
+		#'transient-posframe--delete)
+    (advice-add 'transient--fit-window-to-buffer :override
+		#'transient-posframe--resize))
    (t
     (setq transient-display-buffer-action
 	  transient-posframe-display-buffer-action--previous)
     (advice-remove 'transient--delete-window
-		   #'transient-posframe--delete))))
+		   #'transient-posframe--delete)
+    (advice-remove 'transient--fit-window-to-buffer
+		   #'transient-posframe--resize))))
 
 (provide 'transient-posframe)
 
