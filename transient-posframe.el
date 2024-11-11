@@ -7,7 +7,7 @@
 ;; URL: https://github.com/yanghaoxie/transient-posframe
 ;; Version: 0.1.0
 ;; Keywords: convenience, bindings, tooltip
-;; Package-Requires: ((emacs "26.0")(posframe "0.4.3")(transient "0.2.0"))
+;; Package-Requires: ((emacs "26.0")(posframe "1.4.4")(transient "0.7.9"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
