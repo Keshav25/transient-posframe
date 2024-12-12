@@ -85,7 +85,7 @@ When 0, no border is showed."
    :min-width transient-minimal-frame-width
    :internal-border-width transient-posframe-border-width
    :internal-border-color (face-attribute 'transient-posframe-border
-					  :background nil t)
+                                          :background nil t)
    :override-parameters transient-posframe-parameters)
   (get-buffer-window transient--buffer-name t))
 
@@ -98,18 +98,18 @@ When 0, no border is showed."
   (cond
    (transient-posframe-mode
     (setq transient-posframe-display-buffer-action--previous
-	  transient-display-buffer-action)
+          transient-display-buffer-action)
     (setq transient-display-buffer-action
-	  '(transient-posframe--show-buffer)))
+          '(transient-posframe--show-buffer)))
    (t
     (setq transient-display-buffer-action
-	  transient-posframe-display-buffer-action--previous))))
+          transient-posframe-display-buffer-action--previous))))
 
 (provide 'transient-posframe)
 
 ;; Local Variables:
 ;; coding: utf-8
-;; indent-tabs-mode: t
+;; indent-tabs-mode: nil
 ;; End:
 
 ;;; transient-posframe.el ends here
