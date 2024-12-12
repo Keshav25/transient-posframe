@@ -73,20 +73,21 @@ When 0, no border is showed."
 
 (defun transient-posframe--show-buffer (buffer _alist)
   "Show BUFFER in posframe and we do not use _ALIST at this period."
-  (when (posframe-workable-p)
-    (posframe-show
-     buffer
-     :font transient-posframe-font
-     :position (point)
-     :poshandler transient-posframe-poshandler
-     :background-color (face-attribute 'transient-posframe :background nil t)
-     :foreground-color (face-attribute 'transient-posframe :foreground nil t)
-     :min-width transient-minimal-frame-width
-     :internal-border-width transient-posframe-border-width
-     :internal-border-color (face-attribute 'transient-posframe-border
-					    :background nil t)
-     :override-parameters transient-posframe-parameters)
-    (get-buffer-window transient--buffer-name t)))
+  (unless (posframe-workable-p)
+    (error "Posframe is not workable"))
+  (posframe-show
+   buffer
+   :font transient-posframe-font
+   :position (point)
+   :poshandler transient-posframe-poshandler
+   :background-color (face-attribute 'transient-posframe :background nil t)
+   :foreground-color (face-attribute 'transient-posframe :foreground nil t)
+   :min-width transient-minimal-frame-width
+   :internal-border-width transient-posframe-border-width
+   :internal-border-color (face-attribute 'transient-posframe-border
+					  :background nil t)
+   :override-parameters transient-posframe-parameters)
+  (get-buffer-window transient--buffer-name t))
 
 ;;;###autoload
 (define-minor-mode transient-posframe-mode
