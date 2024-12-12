@@ -97,7 +97,8 @@ When 0, no border is showed."
      :internal-border-width transient-posframe-border-width
      :internal-border-color (face-attribute 'transient-posframe-border
 					    :background nil t)
-     :override-parameters transient-posframe-parameters)))
+     :override-parameters transient-posframe-parameters)
+    (get-buffer-window transient--buffer-name t)))
 
 (defun transient-posframe--initialize ()
   "Initialize transient posframe."
