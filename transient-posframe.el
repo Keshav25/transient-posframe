@@ -38,9 +38,9 @@
 
 (defcustom transient-posframe-font nil
   "The font used by transient-posframe.
-When nil, Using current frame's font as fallback."
+When nil, use current frame's font as fallback."
   :group 'transient-posframe
-  :type 'string)
+  :type '(choice string (const :tag "Use font of current frame")))
 
 (defcustom transient-posframe-poshandler #'posframe-poshandler-frame-center
   "The poshandler of transient-posframe."
@@ -66,7 +66,7 @@ When 0, no border is showed."
 (defcustom transient-posframe-parameters nil
   "The frame parameters used by transient-posframe."
   :group 'transient-posframe
-  :type 'string)
+  :type '(alist :key-type symbol :value-type sexp))
 
 (defface transient-posframe
   '((t (:inherit default)))
