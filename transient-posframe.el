@@ -7,7 +7,7 @@
 ;; URL: https://github.com/yanghaoxie/transient-posframe
 ;; Version: 0.1.0
 ;; Keywords: convenience, bindings, tooltip
-;; Package-Requires: ((emacs "26.0")(posframe "1.4.4")(transient "0.7.9"))
+;; Package-Requires: ((emacs "26.1") (posframe "1.4.4") (transient "0.8.2"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -47,16 +47,6 @@ When nil, use current frame's font as fallback."
   :group 'transient-posframe
   :type 'function)
 
-(defcustom transient-posframe-min-width 83
-  "The minimal width of transient-posframe."
-  :group 'transient-posframe
-  :type '(choice number (const :tag "No minimum" nil)))
-
-(defcustom transient-posframe-min-height nil
-  "The minimal height of transient-posframe."
-  :group 'transient-posframe
-  :type '(choice number (const :tag "No minimum" nil)))
-
 (defcustom transient-posframe-border-width 1
   "The border width used by transient-posframe.
 When 0, no border is showed."
@@ -91,30 +81,12 @@ When 0, no border is showed."
      :poshandler transient-posframe-poshandler
      :background-color (face-attribute 'transient-posframe :background nil t)
      :foreground-color (face-attribute 'transient-posframe :foreground nil t)
-     :initialize #'transient-posframe--initialize
-     :min-width transient-posframe-min-width
-     :min-height transient-posframe-min-height
+     :min-width transient-minimal-frame-width
      :internal-border-width transient-posframe-border-width
      :internal-border-color (face-attribute 'transient-posframe-border
 					    :background nil t)
      :override-parameters transient-posframe-parameters)
     (get-buffer-window transient--buffer-name t)))
-
-(defun transient-posframe--initialize ()
-  "Initialize transient posframe."
-  (setq window-resize-pixelwise t)
-  (setq window-size-fixed nil))
-
-(defun transient-posframe--resize (window)
-  "Resize transient posframe."
-  (fit-frame-to-buffer-1 (window-frame window)
-                         nil transient-posframe-min-height
-                         nil transient-posframe-min-width))
-
-(defun transient-posframe--delete ()
-  "Delete transient posframe."
-  (posframe-delete-frame transient--buffer-name)
-  (posframe--kill-buffer transient--buffer-name))
 
 ;;;###autoload
 (define-minor-mode transient-posframe-mode
@@ -127,18 +99,10 @@ When 0, no border is showed."
     (setq transient-posframe-display-buffer-action--previous
 	  transient-display-buffer-action)
     (setq transient-display-buffer-action
-	  '(transient-posframe--show-buffer))
-    (advice-add 'transient--delete-window :override
-		#'transient-posframe--delete)
-    (advice-add 'transient--fit-window-to-buffer :override
-		#'transient-posframe--resize))
+	  '(transient-posframe--show-buffer)))
    (t
     (setq transient-display-buffer-action
-	  transient-posframe-display-buffer-action--previous)
-    (advice-remove 'transient--delete-window
-		   #'transient-posframe--delete)
-    (advice-remove 'transient--fit-window-to-buffer
-		   #'transient-posframe--resize))))
+	  transient-posframe-display-buffer-action--previous))))
 
 (provide 'transient-posframe)
 
