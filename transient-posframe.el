@@ -108,7 +108,7 @@ When 0, no border is showed."
 (provide 'transient-posframe)
 
 ;; Local Variables:
-;; coding: utf-8-unix
+;; coding: utf-8
 ;; indent-tabs-mode: t
 ;; End:
 
