@@ -47,6 +47,13 @@ When nil, use current frame's font as fallback."
   :group 'transient-posframe
   :type 'function)
 
+(defcustom transient-posframe-refposhandler #'transient-posframe-refposhandler-default
+  "The refposhandler used by transient-posframe.
+
+NOTE: This variable is very useful to EXWM users."
+  :type 'function)
+
+
 (defcustom transient-posframe-border-width 1
   "The border width used by transient-posframe.
 When 0, no border is showed."
@@ -80,6 +87,7 @@ When 0, no border is showed."
    :font transient-posframe-font
    :position (point)
    :poshandler transient-posframe-poshandler
+   :refposhandler transient-posframe-refposhandler
    :background-color (face-attribute 'transient-posframe :background nil t)
    :foreground-color (face-attribute 'transient-posframe :foreground nil t)
    :min-width transient-minimal-frame-width
@@ -88,6 +96,26 @@ When 0, no border is showed."
                                           :background nil t)
    :override-parameters transient-posframe-parameters)
   (get-buffer-window transient--buffer-name t))
+
+(defun transient-posframe-refposhandler-default (&optional frame)
+  "The default posframe refposhandler used by whick-key-posframe. Copied from vertico-posframe
+Optional argument FRAME ."
+  (cond
+   ;; EXWM environment
+   ((bound-and-true-p exwm--connection)
+    (or (ignore-errors
+          (let ((info (elt exwm-workspace--workareas
+                           exwm-workspace-current-index)))
+            (cons (elt info 0)
+                  (elt info 1))))
+        ;; Need user install xwininfo.
+        (ignore-errors
+          (posframe-refposhandler-xwininfo frame))
+        ;; Fallback, this value will incorrect sometime, for example: user
+        ;; have panel.
+        (cons 0 0)))
+   (t nil)))
+
 
 ;;;###autoload
 (define-minor-mode transient-posframe-mode
